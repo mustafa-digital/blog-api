@@ -8,6 +8,7 @@
  * -------------- DEPENDENCIES --------------
  */
 const express = require("express");
+const prisma = require("./config/client");
 
 /**
  * -------------- GENERAL SETUP ----------------
