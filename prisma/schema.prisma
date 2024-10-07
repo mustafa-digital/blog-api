@@ -1,0 +1,54 @@
+// Prisma Schema file
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model Account {
+  id String @id @default(uuid())
+  username String @db.VarChar(30) @unique
+  hash String @db.VarChar(60)
+  email String @db.VarChar(319) @unique
+  profile Profile?
+}
+
+model Profile {
+  account Account @relation(fields: [accountId], references: [id])
+  accountId String @unique
+  createdAt DateTime @default(now())
+  admin Boolean @default(false)
+  author Boolean @default(false)
+  posts Post[]
+  comments Comment[]
+}
+
+// model Author {
+//   profile Profile @relation(fields: [accountId], references: [accountId])
+//   accountId String @unique
+// }
+
+model Post {
+  id String @id @default(uuid())
+  title String @db.VarChar(100)
+  content String @db.VarChar(500)
+  createdAt DateTime @default(now())
+  profile Profile @relation(fields: [accountId_Ref], references: [accountId])
+  accountId_Ref String
+  comments Comment[]
+  published Boolean @default(false)
+}
+
+model Comment {
+  id String @id @default(uuid())
+  content String @db.VarChar(255)
+  createdAt DateTime @default(now())
+  profile Profile @relation(fields: [accountId_Ref], references: [accountId])
+  accountId_Ref String
+  post Post @relation(fields: [postId], references: [id])
+  postId String
+}
