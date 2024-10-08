@@ -9,7 +9,7 @@
  */
 const express = require("express");
 const prisma = require("./config/client");
-
+const passport = require("passport");
 /**
  * -------------- GENERAL SETUP ----------------
  */
@@ -22,6 +22,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // set static assets folder
 app.use(express.static(__dirname + "/public"));
+
+// Initialize the passport middleware on every request
+app.use(passport.initialize());
 
 app.get("/", (req, res) => res.send("Hello World!"));
 /**
