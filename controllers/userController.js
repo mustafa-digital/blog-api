@@ -9,9 +9,6 @@ const userController = {
     // TODO
   },
   postLogin: async (req, res, next) => {
-    // TODO
-    // STEP 1: validate the login credentials
-
     // get the user credentials from req.body
     const { username, password } = req.body;
 
@@ -37,6 +34,14 @@ const userController = {
       // login is validated, so now we can issue a JWT to authenticate the user
       if (isValid) {
         const jwt = issueJWT(user);
+        return res
+          .status(200)
+          .json({ message: "Authentication passed.", token: jwt });
+      } else {
+        res.status(401).json({
+          message:
+            "The username or password you have entered is invalid. Please try again.",
+        });
       }
     } catch (error) {
       // Maybe send this to the error handling middleware instead
@@ -44,9 +49,6 @@ const userController = {
         .status(500)
         .json({ message: "Error: Could not validate login credentials." });
     }
-
-    // if valid: STEP 2 - issue JWT
-    // if invalid: return error message
   },
 };
 
