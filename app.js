@@ -23,10 +23,33 @@ app.use(express.urlencoded({ extended: true }));
 // set static assets folder
 app.use(express.static(__dirname + "/public"));
 
-// Initialize the passport middleware on every request
+/**
+ * -------------- PASSPORT INIT ----------------
+ */
+require("./config/passport");
+
 app.use(passport.initialize());
 
 app.get("/", (req, res) => res.send("Hello World!"));
+
+/**
+ * -------------- ROUTES ----------------
+ * Assign all the routes from routes.js to app
+ */
+require("./routes/routes")(app);
+
+/**
+ * -------------- ERROR HANDLER ----------------
+ */
+// app.use((err, req, res, next) => {
+// if (res.headersSent) {
+//   return next(err);
+// }
+// return res.status(500).render("error", {
+//   error: err,
+// });
+// });
+
 /**
  * -------------- SERVER ----------------
  */

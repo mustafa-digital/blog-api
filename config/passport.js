@@ -12,9 +12,7 @@ opts.secretOrKey = process.env.JWT_SECRET;
 
 passport.use(
   new jwtStrategy(opts, async function (jwt_payload, done) {
-    // TODO
     // Verify User - find user in database using payload.sub
-
     const userId = jwt_payload.sub;
     try {
       const user = await prisma.account.findFirst({
