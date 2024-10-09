@@ -32,6 +32,9 @@ app.use(passport.initialize());
 
 app.get("/", (req, res) => res.send("Hello World!"));
 
+// const { checkUser } = require("./lib/authMiddleware");
+// app.use(checkUser);
+
 /**
  * -------------- ROUTES ----------------
  * Assign all the routes from routes.js to app
