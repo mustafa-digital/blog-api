@@ -5,23 +5,33 @@ const postController = require("../controllers/postController");
 const postRouter = require("express").Router();
 
 /**
- * -------------- MIDDLEWARE ----------------
+ * -------------- NESTED ROUTES ----------------
  */
+// Nested route for comments
+const commentRouter = require("./commentRouter");
+postRouter.use("/:postId/comment", commentRouter);
 
 /**
  * -------------- POST ROUTES ----------------
  */
-postRouter.post("/create", postController.postCreate);
+postRouter.post("/", postController.postCreate);
+
+/**
+ * -------------- DELETE ROUTES ----------------
+ */
+postRouter.delete("/:postId", postController.postDelete);
 
 /**
  * -------------- PUT ROUTES ----------------
  */
-// postRouter.put("/edit", postController.editPost)
+postRouter.put("/:postId", postController.postUpdate);
 
 /**
  * -------------- GET ROUTES ----------------
  */
 postRouter.get("/", postController.getUserPosts);
 postRouter.get("/all", postController.getAllPosts);
+postRouter.get("/:postId", postController.getPostsById);
+postRouter.get("/author/:authorId", postController.getPostsByAuthor);
 
 module.exports = postRouter;
