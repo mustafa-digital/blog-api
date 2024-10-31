@@ -11,7 +11,7 @@ const commentRouter = require("express").Router({ mergeParams: true });
 /**
  * -------------- POST ROUTES ----------------
  */
-commentRouter.post("/add", commentController.postComment);
+commentRouter.post("/", commentController.postComment);
 
 /**
  * -------------- DELETE ROUTES ----------------
